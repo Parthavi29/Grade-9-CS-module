@@ -159,7 +159,7 @@ def translate():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     M = np.float32([[1, 0, 100], [0, 1, 50]])
     dst = cv.warpAffine(img, M, (cols, rows))
     cv.imshow('img', dst)
@@ -170,7 +170,7 @@ def reflection():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     M = np.float32([[1,  0, 0],[0, -1, rows],[0,  0, 1]])
     reflected_img = cv.warpPerspective(img, M,(int(cols),int(rows)))
     cv.imshow('img', reflected_img)
@@ -182,7 +182,7 @@ def rotation():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     M = np.float32([[1,  0, 0], [0, -1, rows], [0,  0, 1]])
     img_rotation = cv.warpAffine(img,cv.getRotationMatrix2D((cols/2, rows/2),30, 0.6),(cols, rows))
     cv.imshow('img', img_rotation)
@@ -194,7 +194,7 @@ def scaling():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     img_shrinked = cv.resize(img, (250, 200),interpolation=cv.INTER_AREA)
     cv.imshow('img', img_shrinked)
     img_enlarged = cv.resize(img_shrinked, None,fx=1.5, fy=1.5,interpolation=cv.INTER_CUBIC)
@@ -206,7 +206,7 @@ def shearing_x_axis():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     M = np.float32([[1, 0.5, 0], [0, 1, 0], [0, 0, 1]])
     sheared_img = cv.warpPerspective(img, M, (int(cols*1.5), int(rows*1.5)))
     cv.imshow('img', sheared_img)
@@ -217,7 +217,7 @@ def shearing_y_axis():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     M = np.float32([[1,   0, 0], [0.5, 1, 0], [0,   0, 1]])
     sheared_img = cv.warpPerspective(img, M, (int(cols*1.5), int(rows*1.5)))
     cv.imshow('sheared_y-axis_out.jpg', sheared_img)
@@ -265,13 +265,9 @@ def color_spaces():
 def convolutions():
     import cv as cv
     import numpy as np
-    # Reading the image
     image = cv.imread('Photos/cats.jpg')
-    # Creating the kernel with numpy
     kernel2 = np.ones((5, 5), np.float32)/25
-    # Applying the filter
     img = cv.filter2D(src=image, ddepth=-1, kernel=kernel2)
-    # showing the image
     cv.imshow('Original', image)
     cv.imshow('Kernel Blur', img)
     cv.waitKey()
@@ -280,11 +276,8 @@ def convolutions():
 def averaging():
     import cv2 as cv
     import numpy as np
-    # Reading the image
     image = cv.imread('Photos/cats.jpg')
-    # Applying the filter
     averageBlur = cv.blur(image, (5, 5))
-    # Showing the image
     cv.imshow('Original', image)
     cv.imshow('Average blur', averageBlur)
     cv.waitKey()
@@ -293,11 +286,8 @@ def averaging():
 def gaussian():
     import cv2 as cv
     import numpy as np
-    # Reading the image
     image = cv.imread('Photos/cats.jpg')
-    # Applying the filter
     gaussian = cv.GaussianBlur(image, (3, 3), 0)
-    # Showing the image
     cv.imshow('Original', image)
     cv.imshow('Gaussian blur', gaussian)
     cv.waitKey()
@@ -306,12 +296,9 @@ def gaussian():
 def median():
     import cv2 as cv
     import numpy as np
-    # Reading the image
     image = cv.imread('Photos/cats.jpg')
-    # Applying the filter
     medianBlur = cv.medianBlur(image, 9)
     cv.medianBlur(image, 9)
-    # Showing the image
     cv.imshow('Original', image)
     cv.imshow('Median blur', 
     medianBlur)
@@ -321,12 +308,9 @@ def median():
 def bilateral():
     import cv2 as cv
     import numpy as np
-    # Reading the image
     image = cv.imread('Photos/cats.jpg')
-    # Applying the filter
     bilateral = cv.bilateralFilter(image, 
     9, 75, 75)
-    # Showing the image
     cv.imshow('Original', image)
     cv.imshow('Bilateral blur', bilateral)
     cv.waitKey()
