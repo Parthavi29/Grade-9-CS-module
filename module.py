@@ -149,7 +149,7 @@ def translate():
     import cv2 as cv
     import numpy as np
     img=cv.imread('Photos/park.jpg',0)
-    rows,cols=img.shape
+    rows,cols=img.shape[0],img.shape[1]
     M=np.float32([[1,0,100],[0,1,50]])
     dst=cv.warpAffine(img,M,(cols,rows))
     cv.imshow('Image',dst)
@@ -160,9 +160,8 @@ def reflection_xaxis():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
-    #M = np.float32([[1,  0, 0],[0, -1, rows],[0,  0, 1]]) #vertical
-    M = np.float32([[-1, 0, cols], [0, 1, 0], [0, 0, 1]]) #horizontal
+    rows, cols = img.shape[0],img.shape[1]
+    M = np.float32([[-1, 0, cols], [0, 1, 0], [0, 0, 1]])
     reflected_img = cv.warpPerspective(img, M,(int(cols),int(rows)))
     cv.imshow('img', reflected_img)
     cv.imwrite('reflection_out.jpg', reflected_img)
@@ -173,9 +172,8 @@ def reflection_yaxis():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
-    M = np.float32([[1,  0, 0],[0, -1, rows],[0,  0, 1]]) #vertical
-    #M = np.float32([[-1, 0, cols], [0, 1, 0], [0, 0, 1]]) #horizontal
+    rows, cols = img.shape[0],img.shape[1]
+    M = np.float32([[1,  0, 0],[0, -1, rows],[0,  0, 1]])
     reflected_img = cv.warpPerspective(img, M,(int(cols),int(rows)))
     cv.imshow('img', reflected_img)
     cv.imwrite('reflection_out.jpg', reflected_img)
@@ -186,7 +184,7 @@ def rotate():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     M = np.float32([[1,  0, 0], [0, -1, rows], [0,  0, 1]])
     img_rotation = cv.warpAffine(img,cv.getRotationMatrix2D((cols/2, rows/2),30, 0.6),(cols, rows))
     cv.imshow('img', img_rotation)
@@ -198,11 +196,9 @@ def shrink():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     img_shrinked=cv.resize(img, (250, 200),interpolation=cv.INTER_AREA)
     cv.imshow('img', img_shrinked)
-    img_enlarged = cv.resize(img_shrinked, None,fx=1.5, fy=1.5,interpolation=cv.INTER_CUBIC)
-    cv.imshow('img', img_enlarged)
     cv.waitKey(0)
     cv.destroyAllWindows()
     
@@ -210,10 +206,8 @@ def enlarge():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
-    img_enlarged = cv.resize(img_enlarged, None,fx=1.5, fy=1.5,interpolation=cv.INTER_CUBIC)
-    cv.imshow('img', img_enlarged)
-    img_enlarged = cv.resize(img_enlarged, None,fx=1.5, fy=1.5,interpolation=cv.INTER_CUBIC)
+    rows, cols = img.shape[0],img.shape[1]
+    img_enlarged = cv.resize(img, None,fx=1.5, fy=1.5,interpolation=cv.INTER_CUBIC)
     cv.imshow('img', img_enlarged)
     cv.waitKey(0)
     cv.destroyAllWindows()
@@ -230,7 +224,7 @@ def shearing_x():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
+    rows, cols = img.shape[0],img.shape[1]
     M = np.float32([[1, 0.5, 0], [0, 1, 0], [0, 0, 1]])
     sheared_img = cv.warpPerspective(img, M, (int(cols*1.5), int(rows*1.5)))
     cv.imshow('img', sheared_img)
@@ -241,8 +235,8 @@ def shearing_y():
     import numpy as np
     import cv2 as cv
     img = cv.imread('Photos/cat.jpg', 0)
-    rows, cols = img.shape
-    M = np.float32([[1,   0, 0], [0.5, 1, 0], [0,   0, 1]])
+    rows, cols = img.shape[0],img.shape[1]
+    M = np.float32([[1, 0, 0], [0.5, 1, 0], [0,   0, 1]])
     sheared_img = cv.warpPerspective(img, M, (int(cols*1.5), int(rows*1.5)))
     cv.imshow('sheared_y-axis_out.jpg', sheared_img)
     cv.waitKey(0)
@@ -257,10 +251,10 @@ def contour():
     contours,hierarchy=cv.findContours(edge,cv.RETR_EXTERNAL,cv.CHAIN_APPROX_NONE)
     cv.imshow('Canny edges after contouring',edge)
     print('Number of contours found=',+str(len(contours)))
-    cv.drawContours(img,contours,-1,(0,255,0),3) #-1 signifies drawing all contours
+    cv.drawContours(img,contours,-1,(0,255,0),3)
     cv.imshow('contours',img)
     cv.waitKey(0)
-    cv.destroyAllWindows
+    cv.destroyAllWindows()
     
 def color_spaces():
     import cv2 as cv
